@@ -1,4 +1,5 @@
 //	Nathan Kruger
+//	All code based on psuedocode from class readings
 //
 //  bst.h
 //  
