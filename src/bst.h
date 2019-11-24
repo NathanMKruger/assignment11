@@ -1,3 +1,4 @@
+//	Nathan Kruger
 //
 //  bst.h
 //  
@@ -72,12 +73,62 @@ namespace csi281 {
         // need to initialize root
         void insert(T key) {
             // YOUR CODE HERE
+			Node myNode = new Node (key, nullptr, nullptr);
+			Node *currentNode = root;
+
+			while (currentNode != nullptr)
+			{
+				myNode = currentNode; //reassign new myNode as currentNode
+				if (key <= currentNode->key)
+				{
+					currentNode = currentNode->left; //go to the left of currentNode
+				}
+				else //if key is greater than the key value in currentNode
+				{
+					currentNode = currentNode->right; //go to the right of currentNode
+				}
+			}
+
+			if (root == nullptr) //sees if root exists or not
+			{
+				root->key = key; //if not, then the current key will become the root node
+			}
+			else if (key <= myNode->key)
+			{
+				myNode->left = key; //insert new key and replace the nullptr left of myNode
+			}
+			else //if key is greater than key value of myNode
+			{
+				myNode->right = key; //insert new key and replace the nullptr right of myNode
+			}
+
+			count++; //increment count variable
         }
         
         // Do a search through the tree and return
         // whether or not it contains *key*
         bool contains(const T &key) {
             // YOUR CODE HERE
+			Node *currentNode = root; //create and track current node
+			  while (currenNode != nullptr && key != currentNode->key)
+			  {
+				  if (key < currentNode->key)
+				  {
+					currentNode = currentNode->left; //move currentNode to the left
+				  }
+				  else //if the key is greater than the key within currentNode
+				  {
+					currentNode = currentNode->right; //move currentNode to the right
+				  }
+			}
+			  if (currentNode->key == key)
+			  {
+				  return true; //key is contained in the tree
+			}
+			  else
+			  {
+				  return false; //key is NOT contained in the tree
+			  }
         }
         
         // Helper for inOrderWalk() to call for entire bst
@@ -91,18 +142,36 @@ namespace csi281 {
         // TIP: See page 288 of Chapter 12 of Introduction to Algorithms
         void inOrderWalk(list<T> &accumulated, Node *current) {
             // YOUR CODE HERE
+			  if (current != nullptr)
+			  {
+				  inOrderWalk(accumulated, current->left); //go to all available left nodes in regards to current
+				cout << current->key; //print key in current
+				inOrderWalk(accumulated, current->right); //move to the next right node in regards to current
+			}
         }
         
         // Find the minimum key in the tree
         // If the tree is empty, return nullopt
         optional<T> minimum() {
             // YOUR CODE HERE
+			Node *currentNode = root; //tracks current node
+			while (currentNode->left != nullptr) //loop goes until the end of the complete left side
+			{
+				currentNode = currentNode->left //assign currentNode with the smaller valued left node
+			}
+			return currentNode->key; //return the value/key of the currentNode when at end of tree hight
         }
         
         // Find the maximum key in the tree
         // If the tree is empty, return nullopt
         optional<T> maximum() {
             // YOUR CODE HERE
+			Node *currentNode = root; //tracks current node
+			while (currentNode->right != nullptr) //loop goes until the end of the complete right side
+			{
+				currentNode = currentNode->right; //assign currentNode with the larger valued right side
+			}
+			return currentNode->key; //return the value/key of the currentNade when at the end of tree hight
         }
         
         // How many nodes are in the tree?
